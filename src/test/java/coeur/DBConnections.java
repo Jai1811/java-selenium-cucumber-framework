@@ -35,7 +35,7 @@ public class DBConnections {
 	public static Node jcrConnection() throws RepositoryException {
 		
 		Repository repository = JcrUtils.getRepository("http://localhost:4502/crx/server");
-		javax.jcr.Session session = repository.login( new SimpleCredentials("admin", "admin".toCharArray()));
+		javax.jcr.Session session = repository.login( new SimpleCredentials("", "".toCharArray()));
 		Node root = session.getRootNode();
 		Node node = root.getNode("content/we-retail/us/en/men");
 		return node;
