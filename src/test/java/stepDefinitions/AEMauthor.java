@@ -8,6 +8,11 @@ import java.util.List;
 import java.util.Map;
 
 
+import coeur.DBConnections;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.Mongo;
+import com.mongodb.MongoClient;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Point;
@@ -46,6 +51,7 @@ public class AEMauthor extends CommonFunction {
 	Applitoolslib initiateApplitoolslib = new Applitoolslib();
 	Eyes eyes;
 	RestassuredApi apiServices = new RestassuredApi();
+	DBConnections dbConnections =  new DBConnections();
 
 	@Before
 	public void init(Scenario scenario) {
@@ -768,7 +774,16 @@ WebDriverManager.chromedriver().setup();
 		
 		
 	}
-	
+	@Then("^Connect to the MongoDb$")
+	public void connectToMongoDb(){
+		String coonectionString="mongodb://username:Password@]host1:[:port1]";
+		MongoClient mongoClient = dbConnections.connectionToMongo(coonectionString);
+		DB database = mongoClient.getDB("DBNAME");
+		DBCollection dbCollection = database.getCollection("collectionName");
+		dbCollection.find();
+	}
+
+
 //	
 //	@After()
 //	public void closeExecution() {
