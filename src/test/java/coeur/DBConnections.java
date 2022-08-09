@@ -13,13 +13,17 @@ import org.apache.jackrabbit.commons.*;
 
 
 public class DBConnections {
-	MongoClient mongoClient;
-	public static Connection mysqlconnection() {
+	private static MongoClient mongoClient;
+	private static Connection conn = null;
+
+
+	public DBConnections() {
+
+	}
+	static{
 		String driver = "com.mysql.cj.jdbc.Driver";
 		String url = "jdbc:mysql://localhost:3306/flight?";
 		String usernamepassword = "user=root&password=root";
-		Connection conn = null;
-		MongoClient mongoClient;
 
 		try {
 			Class.forName(driver).newInstance();
@@ -29,8 +33,10 @@ public class DBConnections {
 		} catch (Exception e) {
 			System.out.println("Could not connect to database");
 		}
-		return conn;
+	}
 
+	public static Connection getmysqlconnection() {
+		return conn;
 	}
 
 
@@ -42,21 +48,20 @@ public class DBConnections {
 		Node root = session.getRootNode();
 		Node node = root.getNode("content/we-retail/us/en/men");
 		return node;
-
-
 	}
 
-
-	public static void addComponent(Node node) {}
-
-	public  MongoClient connectionToMongo(String ConnectionString){
+	static {
+		String connectionString="";
 		try {
-			mongoClient =  new MongoClient(ConnectionString);
+			mongoClient =  new MongoClient(connectionString);
 
 		}catch(Exception e)
 		{
 			System.out.println("Unable to connect to mongoDB");
 		}
+	}
+
+	public static MongoClient getconnectionToMongo(String ConnectionString){
 		return mongoClient;
 	}
 

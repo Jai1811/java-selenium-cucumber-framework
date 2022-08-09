@@ -3,6 +3,7 @@ package stepDefinitions;
 //import static org.testng.Assert.assertTrue;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -11,16 +12,13 @@ import java.util.Map;
 import coeur.DBConnections;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
-import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import com.applitools.eyes.TestResultsSummary;
 import com.applitools.eyes.selenium.Eyes;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
@@ -30,7 +28,6 @@ import coeur.Reports;
 import coeur.RestassuredApi;
 import cucumber.api.DataTable;
 import cucumber.api.Scenario;
-import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -51,7 +48,7 @@ public class AEMauthor extends CommonFunction {
 	Applitoolslib initiateApplitoolslib = new Applitoolslib();
 	Eyes eyes;
 	RestassuredApi apiServices = new RestassuredApi();
-	DBConnections dbConnections =  new DBConnections();
+	Connection dbConnections =  DBConnections.getmysqlconnection();
 
 	@Before
 	public void init(Scenario scenario) {
@@ -777,7 +774,7 @@ WebDriverManager.chromedriver().setup();
 	@Then("^Connect to the MongoDb$")
 	public void connectToMongoDb(){
 		String coonectionString="mongodb://username:Password@]host1:[:port1]";
-		MongoClient mongoClient = dbConnections.connectionToMongo(coonectionString);
+		MongoClient mongoClient = DBConnections.getconnectionToMongo(coonectionString);
 		DB database = mongoClient.getDB("DBNAME");
 		DBCollection dbCollection = database.getCollection("collectionName");
 		dbCollection.find();
