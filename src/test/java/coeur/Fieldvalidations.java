@@ -21,7 +21,7 @@ public class Fieldvalidations {
 		Connection conn = null;
 		String fieldvalue = null;
 		if (tablename.equals("air_flight_details")) {
-			conn = DBConnections.mysqlconnection();
+			conn = DBConnections.getmysqlconnection();
 			String sql = "Select * from " + tablename;
 			PreparedStatement psmt = conn.prepareStatement(sql);
 			ResultSet rs = psmt.executeQuery();
@@ -36,7 +36,7 @@ public class Fieldvalidations {
 
 	public static void sqlmethod() throws SQLException {
 		Connection conn = null;
-		conn = DBConnections.mysqlconnection();
+		conn = DBConnections.getmysqlconnection();
 		String sql = "select f.flight_id,f.from_location,f.to_location,monthname(fd.flight_departure_date) as 			Month_name,avg(fd.price) as Average_price from air_flight f join air_flight_details fd on f.flight_id=fd.flight_id 			group by f.flight_id,Month_name order by f.flight_id,Month_name";
 
 		PreparedStatement psmt = conn.prepareStatement(sql);
